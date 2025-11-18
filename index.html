@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Muhamad Ichsan Lutfi</title>
+    
+    <!-- Ikon untuk Browser Tab -->
+    <link rel="icon" href="https://via.placeholder.com/32.png" type="image/png">
+    
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- --- CSS DIMULAI DI SINI --- -->
+    <style>
+        /* --- Pengaturan Global & Variabel Tema --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --secondary-bg-color: rgba(22, 22, 22, 0.8);
+            --text-color: #e4e4e4;
+            /* Variabel warna tetap biru */
+            --primary-color: #0ea5e9; /* Biru Tua */
+            --secondary-color: #38bdf8; /* Biru Muda */
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- PERUBAHAN: BACKGROUND ABU-ABU --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            /* Background Abu-Abu Solid */
+            background-color: #333333; /* Warna abu-abu gelap yang netral */
+        }
+
+        /* Canvas untuk Background Partikel */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none; /* Agar tidak mengganggu interaksi elemen lain */
+        }
+
+        section {
+            padding: 80px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative; /* Untuk memastikan konten di atas canvas */
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            /* Gradient Biru */
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- Header & Navigasi --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left; /* Rata kiri untuk teks */
+            padding-top: 80px;
+            gap: 3rem; /* Jarak antara foto dan teks */
+        }
+
+        /* --- PERUBAHAN CSS UNTUK FOTO BULAT SEMPURNA --- */
+        .hero-image {
+            width: 300px;
+            height: 300px;
+            aspect-ratio: 1 / 1; /* Memastikan elemen selalu berbentuk persegi */
+            border-radius: 50%; /* Mengubah persegi menjadi lingkaran sempurna */
+            border: 5px solid var(--border-color);
+            object-fit: cover; /* Memastikan gambar mengisi lingkaran tanpa distorsi */
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--secondary-color);
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .typing-text::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .hero-buttons {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap; /* Memungkinkan tombol untuk wrap di layar kecil */
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-color);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        /* --- Animasi Scroll --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Tentang Saya --- */
+        #about {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Pendidikan --- */
+        #education {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .education-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .education-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        /* Garis Timeline di tengah */
+        .education-container::before {
+            content: '';
+            position: absolute;
+            left: 25px; /* Posisi tengah ikon */
+            top: 30px; /* Mulai setelah ikon pertama */
+            bottom: 30px; /* Akhir sebelum ikon terakhir */
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .education-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            z-index: 1; /* Memastikan ikon di atas garis */
+            flex-shrink: 0; /* Mencegah ikon mengecil */
+        }
+
+        .education-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .education-details p {
+            color: #a0a0a0; /* Warna abu-abu untuk tahun */
+            font-size: 0.95rem;
+        }
+
+        /* --- Keahlian (Skills) --- */
+        #skills {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer; /* Menambahkan cursor pointer untuk menunjukkan elemen dapat diklik */
+        }
+
+        .skill-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+        }
+
+        .skill-box i {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            transition: filter 0.3s ease;
+        }
+
+        .skill-box i.fa-html5 { color: #E34C26; }
+        .skill-box i.fa-css3-alt { color: #1572B6; }
+        .skill-box i.fa-js { color: #F7DF1E; }
+        .skill-box i.fa-react { color: #61DAFB; }
+        .skill-box i.fa-node-js { color: #339933; }
+        
+        .skill-box:hover i {
+            filter: brightness(1.2);
+        }
+
+        .skill-box p {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* --- Proyek --- */
+        #projects {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* --- BUKU TAMU --- */
+        #guestbook {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .guestbook-form {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .guestbook-form input, .guestbook-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .guestbook-form input:focus, .guestbook-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .guestbook-entries {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guestbook-entry {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInEntry 0.5s ease;
+        }
+
+        @keyframes fadeInEntry {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .guestbook-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .guestbook-entry-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .guestbook-entry-time {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .guestbook-entry-message {
+            line-height: 1.6;
+        }
+
+        .clear-guestbook-btn {
+            display: block;
+            margin: 2rem auto 0;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #888;
+            color: #888;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .clear-guestbook-btn:hover {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        /* --- Kontak --- */
+        #contact {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--secondary-bg-color);
+            text-align: center;
+            padding: 2rem 5%;
+            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-icons {
+            margin-bottom: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        /* --- Modal untuk Detail Keahlian --- */
+        .skill-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--secondary-bg-color);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .modal-header i {
+            font-size: 3rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+            color: var(--text-color);
+        }
+
+        .modal-body {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        .skill-level {
+            margin-top: 1.5rem;
+        }
+
+        .skill-level h4 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            .skills-container {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .projects-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 4%;
+            }
+            
+            h2 {
+                margin-bottom: 2rem;
+            }
+            
+            nav ul {
+                position: absolute;
+                top: 70px;
+                right: 5%;
+                background: var(--secondary-bg-color);
+                backdrop-filter: blur(15px);
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                flex-direction: column;
+                padding: 1rem;
+                display: none;
+                width: 200px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* Hero Section untuk Mobile */
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding-top: 100px;
+            }
+
+            .hero-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .typing-text {
+                font-size: 1.2rem;
+            }
+            
+            /* Education Section untuk Mobile */
+            .education-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .education-container::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            /* Skills Section untuk Mobile */
+            .skills-container {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 1rem;
+            }
+            
+            .skill-box {
+                padding: 1.5rem 0.8rem;
+            }
+            
+            .skill-box i {
+                font-size: 2.5rem;
+            }
+            
+            /* Projects Section untuk Mobile */
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Guestbook Section untuk Mobile */
+            .guestbook-form {
+                margin: 0 auto 2rem;
+            }
+            
+            /* Contact Section untuk Mobile */
+            .contact-form {
+                margin: 0 auto;
+            }
+            
+            /* Modal untuk Mobile */
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-header i {
+                font-size: 2.5rem;
+            }
+            
+            .modal-header h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 50px 3%;
+            }
+            
+            .hero {
+                padding-top: 90px;
+            }
+            
+            .hero-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .typing-text {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .education-item i {
+                font-size: 1.2rem;
+                padding: 10px;
+            }
+            
+            .education-details h3 {
+                font-size: 1.1rem;
+            }
+            
+            .education-details p {
+                font-size: 0.85rem;
+            }
+            
+            .skill-box {
+                padding: 1rem 0.5rem;
+            }
+            
+            .skill-box i {
+                font-size: 2rem;
+            }
+            
+            .skill-box p {
+                font-size: 0.9rem;
+            }
+            
+            .project-info {
+                padding: 1rem;
+            }
+            
+            .project-info h3 {
+                font-size: 1.1rem;
+            }
+            
+            .project-info p {
+                font-size: 0.9rem;
+            }
+            
+            .guestbook-entry {
+                padding: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+            
+            .modal-header {
+                margin-bottom: 1rem;
+            }
+            
+            .modal-header i {
+                font-size: 2rem;
+            }
+            
+            .modal-header h3 {
+                font-size: 1.3rem;
+            }
+            
+            .modal-body p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <!-- --- CSS BERAKHIR DI SINI --- -->
+</head>
+<body>
+
+    <!-- Canvas untuk Background Partikel -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- --- Header --- -->
+    <header>
+        <nav class="navbar">
+            <a href="#home" class="logo">Porto<span>folio</span></a>
+            <ul>
+                <li><a href="#home" class="nav-link active">Beranda</a></li>
+                <li><a href="#about" class="nav-link">Tentang</a></li>
+                <li><a href="#education" class="nav-link">Pendidikan</a></li>
+                <li><a href="#skills" class="nav-link">Keahlian</a></li>
+                <li><a href="#projects" class="nav-link">Proyek</a></li>
+                <li><a href="#guestbook" class="nav-link">Buku Tamu</a></li>
+                <li><a href="#contact" class="nav-link">Kontak</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- --- Hero Section --- -->
+        <section id="home" class="hero">
+            <img src="san.jpg.jpeg" alt="Foto Profil" class="hero-image">
+            <div class="hero-content">
+                <h1>Halo, Saya <span>Muhamad Ichsan Lutfi</span></h1>
+                <p class="typing-text">Saya seorang Web Developer.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">Lihat Karya Saya</a>
+                    <a href="#contact" class="btn btn-secondary">Hubungi Saya</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Tentang Saya --- -->
+        <section id="about" class="fade-in">
+            <h2>Tentang Saya</h2>
+            <div class="about-text">
+                <p>Saya adalah seorang pengembang web yang penuh semangat, berfokus pada pembuatan aplikasi web yang cepat, responsif, dan ramah pengguna. Saya menikmati proses mengubah ide menjadi produk digital yang nyata dan bermanfaat.</p>
+                <p>Dengan keahlian dalam teknologi front-end dan back-end, saya siap untuk menghadapi tantangan baru dan terus belajar untuk meningkatkan kualitas kode dan desain.</p>
+            </div>
+        </section>
+
+        <!-- --- Pendidikan --- -->
+        <section id="education" class="fade-in">
+            <h2>Pendidikan</h2>
+            <div class="education-container">
+                <div class="education-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="education-details">
+                        <h3>SMK INFOKOM BOGOR</h3>
+                        <p>2025 - 2028 | JURUSAN RPL</p>
+                    </div>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-school"></i>
+                    <div class="education-details">
+                        <h3>SMPN 1 DRAMAGA</h3>
+                        <p>2022 - 2025</p>
+                    </div>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-book"></i>
+                    <div class="education-details">
+                        <h3>SDN 01 CARANG PULANG</h3>
+                        <p>2017 - 2022</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Keahlian --- -->
+        <section id="skills" class="fade-in">
+            <h2>Keahlian Saya</h2>
+            <div class="skills-container">
+                <div class="skill-box" data-skill="html5" data-level="90">
+                    <i class="fab fa-html5"></i>
+                    <p>HTML5</p>
+                </div>
+                <div class="skill-box" data-skill="css3" data-level="85">
+                    <i class="fab fa-css3-alt"></i>
+                    <p>CSS3</p>
+                </div>
+                <div class="skill-box" data-skill="javascript" data-level="80">
+                    <i class="fab fa-js"></i>
+                    <p>JavaScript</p>
+                </div>
+                <div class="skill-box" data-skill="react" data-level="75">
+                    <i class="fab fa-react"></i>
+                    <p>React.js</p>
+                </div>
+                <div class="skill-box" data-skill="nodejs" data-level="70">
+                    <i class="fab fa-node-js"></i>
+                    <p>Node.js</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Proyek --- -->
+        <section id="projects" class="fade-in">
+            <h2>Proyek Saya</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <img src="kalkulator.jpg.png" alt="Aplikasi Kalkulator">
+                    <div class="project-info">
+                        <h3>Kalkulator Sederhana</h3>
+                        <p>Aplikasi web kalkulator fungsional dengan operasi dasar aritmatika, dibuat menggunakan JavaScript murni.</p>
+                        <div class="project-links">
+                            <a href="https://kaka-dr9u.vercel.app/" target="_blank" title="Lihat Demo"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/skece741-dev/asek/tree/main" target="_blank" title="Lihat Kode"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="ular.jpg.png" alt="Game Ular Klasik">
+                    <div class="project-info">
+                        <h3>Game Ular Klasik</h3>
+                        <p>Game ular klasik dengan desain modern dan kontrol yang responsif.</p>
+                        <div class="project-links">
+                            <a href="https://kaka-fawn.vercel.app/" target="_blank" title="Lihat Demo"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/skece741-dev/kaka/blob/main/index.html" target="_blank" title="Lihat Kode"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="kasir.jpg.png" alt="Portfolio Website">
+                    <div class="project-info">
+                        <h3>meja kasir</h3>
+                        <p>Website portfolio pribadi yang responsif dan modern, dibangun dengan HTML, CSS, dan JavaScript.</p>
+                        <div class="project-links">
+                            <a href="#home" title="Lihat Demo"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://asek-delta.vercel.app/" target="_blank" title="Lihat Kode"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- BUKU TAMU --- -->
+        <section id="guestbook" class="fade-in">
+            <h2>Buku Tamu</h2>
+            <p style="text-align:center; margin-bottom: 2rem;">Tinggalkan pesan atau kesan Anda di sini!</p>
+
+            <form class="guestbook-form" id="guestbook-form">
+                <input type="text" name="name" placeholder="Nama Anda" required>
+                <textarea name="message" rows="4" placeholder="Pesan Anda" required></textarea>
+                <button type="submit" class="btn btn-primary">Tinggalkan Pesan</button>
+            </form>
+
+            <div class="guestbook-entries" id="guestbook-entries">
+                <!-- Pesan akan dimuat di sini oleh JavaScript -->
+            </div>
+            <button class="clear-guestbook-btn" id="clear-guestbook-btn">Hapus Semua Pesan</button>
+        </section>
+
+        <!-- --- Kontak --- -->
+        <section id="contact" class="fade-in">
+            <h2>Hubungi Saya</h2>
+            <form class="contact-form">
+                <input type="text" name="name" placeholder="Nama Lengkap" required>
+                <input type="email" name="email" placeholder="Email Anda" required>
+                <textarea name="message" rows="6" placeholder="Pesan Anda" required></textarea>
+                <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- --- Footer --- -->
+    <footer>
+        <div class="social-icons">
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://wa.me/6283840545066" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>&copy; 2024 muhamad ichsan lutfi. Dibuat dengan <i class="fas fa-heart" style="color: var(--secondary-color);"></i></p>
+    </footer>
+
+    <!-- Modal untuk Detail Keahlian -->
+    <div class="skill-modal" id="skill-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div class="modal-header">
+                <i id="modal-icon"></i>
+                <h3 id="modal-title"></h3>
+            </div>
+            <div class="modal-body">
+                <p id="modal-description"></p>
+                <div class="skill-level">
+                    <h4>Tingkat Keahlian</h4>
+                    <div class="progress-bar">
+                        <div class="progress" id="modal-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- --- JAVASCRIPT DIMULAI DI SINI --- -->
+    <script>
+        // --- Hamburger Menu Toggle ---
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // --- Typing Effect ---
+        const typingTextElement = document.querySelector('.typing-text');
+        const texts = ["Web Developer.", "UI/UX Enthusiast.", "Freelancer."];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = texts[textIndex];
+            if (isDeleting) {
+                typingTextElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingTextElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
+            }
+        }
+        type();
+
+        // --- Scroll Animations (Fade In) ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+
+        const fadeElements = document.querySelectorAll('.fade-in');
+        fadeElements.forEach(el => observer.observe(el));
+
+        // --- Active Navigation Link on Scroll ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // --- Form Submission Handler (Kontak) ---
+        document.querySelector('.contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Terima kasih! Pesan Anda telah berhasil dikirim. (Ini adalah simulasi)');
+            this.reset();
+        });
+
+        // --- GUESTBOOK LOGIC ---
+        const guestbookForm = document.getElementById('guestbook-form');
+        const guestbookEntries = document.getElementById('guestbook-entries');
+        const clearGuestbookBtn = document.getElementById('clear-guestbook-btn');
+
+        const saveMessages = () => {
+            const messages = Array.from(guestbookEntries.children).map(entry => ({
+                name: entry.querySelector('.guestbook-entry-name').textContent,
+                message: entry.querySelector('.guestbook-entry-message').textContent,
+                time: entry.querySelector('.guestbook-entry-time').textContent
+            }));
+            localStorage.setItem('guestbookMessages', JSON.stringify(messages));
+        };
+
+        const displayMessages = () => {
+            const messages = JSON.parse(localStorage.getItem('guestbookMessages')) || [];
+            guestbookEntries.innerHTML = '';
+            messages.reverse().forEach(msg => {
+                addMessageToDOM(msg.name, msg.message, msg.time, false);
+            });
+        };
+
+        const addMessageToDOM = (name, message, time, save = true) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'guestbook-entry';
+            entryDiv.innerHTML = `
+                <div class="guestbook-entry-header">
+                    <span class="guestbook-entry-name">${name}</span>
+                    <span class="guestbook-entry-time">${time}</span>
+                </div>
+                <p class="guestbook-entry-message">${message}</p>
+            `;
+            guestbookEntries.prepend(entryDiv);
+            if (save) {
+                saveMessages();
+            }
+        };
+
+        guestbookForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = this.querySelector('input[name="name"]').value;
+            const message = this.querySelector('textarea[name="message"]').value;
+            const time = new Date().toLocaleString('id-ID');
+
+            addMessageToDOM(name, message, time);
+            this.reset();
+        });
+
+        clearGuestbookBtn.addEventListener('click', () => {
+            if (confirm('Apakah Anda yakin ingin menghapus semua pesan di buku tamu?')) {
+                localStorage.removeItem('guestbookMessages');
+                guestbookEntries.innerHTML = '';
+            }
+        });
+
+        displayMessages();
+
+        // --- Interactive Particle Background ---
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x; this.y = y;
+                this.directionX = directionX; this.directionY = directionY;
+                this.size = size; this.color = color;
+                this.baseX = this.x; this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+            }
+            draw() {
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color; ctx.fill();
+            }
+            update() {
+                let dx = mouse.x - this.x, dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let forceDirectionX = dx / distance, forceDirectionY = dy / distance;
+                let maxDistance = mouse.radius, force = (maxDistance - distance) / maxDistance;
+                let directionX = forceDirectionX * force * this.density;
+                let directionY = forceDirectionY * force * this.density;
+                if (distance < mouse.radius) { this.x -= directionX; this.y -= directionY; }
+                else {
+                    if (this.x !== this.baseX) { let dx = this.x - this.baseX; this.x -= dx / 10; }
+                    if (this.y !== this.baseY) { let dy = this.y - this.baseY; this.y -= dy / 10; }
+                }
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.4) - 0.2;
+                let directionY = (Math.random() * 0.4) - 0.2;
+                let color = 'rgba(14, 165, 233, 0.8)';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
+            connect();
+        }
+
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                        + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.2 - (distance / 20000)})`;
+                        ctx.lineWidth = 0.5; ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
+        init(); animate();
+
+        // --- Skill Modal Logic ---
+        const skillModal = document.getElementById('skill-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalProgress = document.getElementById('modal-progress');
+
+        // Data untuk setiap keahlian
+        const skillData = {
+            html5: {
+                title: 'HTML5',
+                icon: 'fab fa-html5',
+                description: 'HTML5 adalah bahasa markup standar untuk membuat halaman web. Saya memiliki pengalaman dalam menggunakan semantic HTML5 untuk struktur yang baik dan aksesibilitas yang lebih baik.',
+                color: '#E34C26'
+            },
+            css3: {
+                title: 'CSS3',
+                icon: 'fab fa-css3-alt',
+                description: 'CSS3 digunakan untuk styling halaman web. Saya mahir dalam menggunakan CSS3 untuk desain responsif, animasi, dan transisi yang menarik.',
+                color: '#1572B6'
+            },
+            javascript: {
+                title: 'JavaScript',
+                icon: 'fab fa-js',
+                description: 'JavaScript adalah bahasa pemrograman yang membuat halaman web interaktif. Saya memiliki pemahaman yang kuat tentang konsep JavaScript modern, ES6+, dan DOM manipulation.',
+                color: '#F7DF1E'
+            },
+            react: {
+                title: 'React.js',
+                icon: 'fab fa-react',
+                description: 'React adalah library JavaScript untuk membangun antarmuka pengguna. Saya berpengalaman dalam menggunakan React untuk membuat aplikasi web single-page yang kompleks dengan state management yang efisien.',
+                color: '#61DAFB'
+            },
+            nodejs: {
+                title: 'Node.js',
+                icon: 'fab fa-node-js',
+                description: 'Node.js adalah runtime JavaScript untuk server-side. Saya menggunakan Node.js untuk membangun API RESTful dan aplikasi real-time dengan Express.js.',
+                color: '#339933'
+            }
+        };
+
+        // Event listener untuk setiap skill box
+        document.querySelectorAll('.skill-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const skill = this.dataset.skill;
+                const level = this.dataset.level;
+                const data = skillData[skill];
+                
+                // Set modal content
+                modalIcon.className = data.icon;
+                modalIcon.style.color = data.color;
+                modalTitle.textContent = data.title;
+                modalDescription.textContent = data.description;
+                
+                // Set progress bar
+                modalProgress.style.width = '0%';
+                
+                // Show modal
+                skillModal.classList.add('active');
+                
+                // Animate progress bar
+                setTimeout(() => {
+                    modalProgress.style.width = level + '%';
+                }, 100);
+            });
+        });
+
+        // Close modal when clicking on close button
+        modalClose.addEventListener('click', function() {
+            skillModal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside of modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === skillModal) {
+                skillModal.classList.remove('active');
+            }
+        });
+
+        // Add touch support for mobile devices
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.closest('.hamburger')) {
+                navMenu.classList.toggle('active');
+            }
+        });
+
+        // Optimize particle animation for mobile
+        if (window.innerWidth < 768) {
+            // Reduce particle count for better performance on mobile
+            const originalInit = init;
+            init = function() {
+                particlesArray = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 30000; // Half particles for mobile
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = (Math.random() * 2) + 1;
+                    let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                    let directionX = (Math.random() * 0.4) - 0.2;
+                    let directionY = (Math.random() * 0.4) - 0.2;
+                    let color = 'rgba(14, 165, 233, 0.8)';
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                }
+            };
+            
+            // Re-initialize with the new settings
+            init();
+        }
+
+    </script>
+    <!-- --- JAVASCRIPT BERAKHIR DI SINI --- -->
+
+</body>
+</html>
